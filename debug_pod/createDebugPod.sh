@@ -1,15 +1,15 @@
-# !/bin/bash
+#!/bin/bash
 
 instance=$1
 bundletype=$2
-
+projectname=mas-$instance-manage
 if [ -z "$instance" ] || [ -z "$bundletype" ]; then
   echo "Usage: $0 <instance> <bundletype>"
   echo "ex: $0 dev1 all"
   exit 1
 fi
 # récupérer le spec du deployment original
-
+oc project $projectname
 original_deployment_spec=$(oc get deployment/$instance-mas-$bundletype -oyaml | yq '.spec.template.spec')
 echo "Original deployment spec:::::::::::::::::::::::::::::::::::::::::::"
 printf "$original_deployment_spec" 
